@@ -1,5 +1,6 @@
 body {
 	font-family: Arial, sans-serif;
+	background: #ddd;
 }
 a {
 	color: #0099f3;
@@ -7,6 +8,10 @@ a {
 section {
 	width: 480px;
 	margin: 0 auto;
+}
+header h1 {
+	color: #555;
+	text-shadow: 1px 1px 1px #fff;
 }
 article h2 {
 	font-size: 16px;
@@ -16,6 +21,12 @@ article h2 {
 article p {
 	padding: 10px 10px 10px 50px;
 	border: 1px solid #ccc;
+	background: #ddd;
+}
+article p.loading {
+	background: url(images/ajax-loader.gif) transparent no-repeat left top;
+}
+article p:hover {
 	background: #eee;
 }
 article p span {

@@ -28,7 +28,7 @@ var PiLazy = new Class
 	  klass: 'data-klass',               // JS Class to instantiate; if set, uses it as class name, else, will assume filename as class name.
       eventsCaptured: 'data-events',     // Overrides default eventsCaptured; If options.watched is set, this option will be ignored.
    	  arguments: 'data-arguments',       // Arguments to pass to constructor; optional. 
-      decorated: 'data-decorated',       // Decorated element for loading and active state; if set, css classes will be added to this element instead, else, will use self.
+      decorated: 'data-decorated',       // Decorated parent element for loading and active state; if set, css classes will be added to this element instead, else, will use self.
       isExternal: 'data-is-ext',         // Loads external script; requires server component. See README.md for more detail.
       hasMultiple: 'data-has-multi'      // Elements can instantiate more than once by event; defaults to false.
     }
@@ -106,6 +106,9 @@ PiLazy.implement({
 	else {
 		// console.log('Class is not loaded');
 		var script = _element.getAttribute(dataOpts.script).trim();
+		var decorated = _element.getAttribute(dataOpts.decorated).trim();
+		var _decorated = _element.getParent(decorated);
+		_decorated.addClass('loading');
 	    new Asset.javascript(script,
 	    {
 	      'onload': this.loaded.bind(this, _element)
