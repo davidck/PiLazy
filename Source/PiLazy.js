@@ -97,7 +97,8 @@ PiLazy.implement({
   load: function(_element)
   {
     var dataOpts = this.options.dataAttributes;
-	var Klass = window[_element.getAttribute(dataOpts.klass).trim()];
+	// var Klass = window[_element.getAttribute(dataOpts.klass).trim()];
+	var Klass = this.klass_finder(_element.getAttribute(dataOpts.klass).trim());
 	if (Klass) {
 		// console.log('Class is already loaded');
 		this.loaded(_element);
@@ -115,6 +116,33 @@ PiLazy.implement({
 	    });
 	}
   },
+process2: function(data) {
+this._element.set('html', data.content);
+
+this.klass = this.klass_finder(this.klass_name);
+if (this.klass) {
+new this.klass(this._element.getElement(this.content_selector));
+}
+},
+klass_finder: function(string) {	  
+var klass_parts = this.klass_name.split('.');
+
+var child = '';
+var klass = null;
+klass_parts.each(function(part, i) {
+var parent = null;
+if (i == 0) {
+parent = window;
+child = part;
+}
+else {
+parent = klass;
+child = part;
+}
+klass = parent[child];
+});
+return klass;
+},
   loaded: function(_element)
   {
     this.fireEvent('load');
